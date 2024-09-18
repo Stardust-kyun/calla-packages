@@ -1,7 +1,7 @@
 Package: calla
 Version: 0.2.2
 Maintainer: Stella <stardust-kyun@proton.me>
-Depends: xorg, pipewire, pipewire-pulse, pulseaudio-utils, wireplumber, brightnessctl, inotify-tools, picom, maim, papirus-icon-theme, fonts-roboto,
+Depends: xorg, pipewire, pipewire-pulse, pulseaudio-utils, wireplumber, brightnessctl, inotify-tools, picom, maim, papirus-icon-theme,
          asciidoctor, cmake, debhelper-compat (= 13), imagemagick, libcairo2-dev, libdbus-1-dev, libgdk-pixbuf-2.0-dev, libglib2.0-dev, liblua5.3-dev, 
          libpango1.0-dev, libstartup-notification0-dev, libx11-xcb-dev, libxcb-cursor-dev, libxcb-icccm4-dev, libxcb-keysyms1-dev, libxcb-randr0-dev, 
          libxcb-shape0-dev, libxcb-util-dev, libxcb-xinerama0-dev, libxcb-xkb-dev, libxcb-xrm-dev, libxcb-xtest0-dev, libxcb-xfixes0-dev, libxdg-basedir-dev, 
