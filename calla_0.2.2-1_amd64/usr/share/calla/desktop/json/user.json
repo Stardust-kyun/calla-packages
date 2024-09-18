@@ -1,0 +1,14 @@
+{
+	"batt": "BAT0",
+	"color": "light",
+	"font": "Roboto Medium 11",
+	"fontalt": "Roboto Bold 11",
+	"fonticon": "Material Icons 13",
+	"mod": "Mod4",
+	"passwd": "calla",
+	"reboot": "systemctl reboot",
+	"sessionlock": false,
+	"shotdir": "~/Pictures/Screenshots",
+	"shutdown": "systemctl poweroff",
+	"terminal": "st"
+}

@@ -1,0 +1,7 @@
+Package: calla
+Version: 0.2.2
+Maintainer: Stella <stardust-kyun@proton.me>
+Depends: xorg, pipewire, pipewire-pulse, pulseaudio-utils, wireplumber, brightnessctl, inotify-tools, picom, maim, papirus-icon-theme
+Architecture: amd64
+Homepage: https://github.com/stardust-kyun/calla
+Description: Calla Desktop Environment
