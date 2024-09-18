@@ -80,6 +80,25 @@
 --         },
 --    }
 --
+-- To maintain the image's aspect ratio while filling the
+-- screen, the image can be cropped using `gears.surface`:
+--
+--
+--
+--<object class=&#34img-object&#34 data=&#34../images/AUTOGEN_awful_wallpaper_mazimized4.svg&#34 alt=&#34Usage example&#34 type=&#34image/svg+xml&#34></object>
+--
+-- 
+--    awful.wallpaper {
+--        screen = s,
+--        widget = {
+--             image  = gears.surface.crop_surface {
+--                 surface = gears.surface.load_uncached(beautiful.wallpaper),
+--                 ratio = s.geometry.width/s.geometry.height,
+--             },
+--             widget = wibox.widget.imagebox,
+--         },
+--    }
+--
 -- Finally, it is also possible to use simpler "branding" in a corner using
 -- `awful.placement`:
 --

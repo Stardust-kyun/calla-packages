@@ -124,7 +124,90 @@ local slider = {mt={}}
 -- @propemits true false
 -- @propbeautiful
 
---- The handle grab cursor.
+--- The cursor icon while grabbing the handle.
+-- The available cursor names are:
+--
+-- <div class='flex-list'>
+-- <div>num\_glyphs</div>
+-- <div>arrow</div>
+-- <div>based\_arrow\_down</div>
+-- <div>based\_arrow\_up</div>
+-- <div>boat</div>
+-- <div>bogosity</div>
+-- <div>bottom\_left\_corner</div>
+-- <div>bottom\_right\_corner</div>
+-- <div>bottom\_side</div>
+-- <div>bottom\_tee</div>
+-- <div>box\_spiral</div>
+-- <div>center\_ptr</div>
+-- <div>circle</div>
+-- <div>clock</div>
+-- <div>coffee\_mug</div>
+-- <div>cross</div>
+-- <div>crosshair</div>
+-- <div>cross\_reverse</div>
+-- <div>cursor</div>
+-- <div>diamond\_cross</div>
+-- <div>dotbox</div>
+-- <div>dot</div>
+-- <div>double\_arrow</div>
+-- <div>draft\_large</div>
+-- <div>draft\_small</div>
+-- <div>draped\_box</div>
+-- <div>exchange</div>
+-- <div>fleur</div>
+-- <div>gobbler</div>
+-- <div>gumby</div>
+-- <div>hand</div>
+-- <div>hand</div>
+-- <div>heart</div>
+-- <div>icon</div>
+-- <div>iron\_cross</div>
+-- <div>leftbutton</div>
+-- <div>left\_ptr</div>
+-- <div>left\_side</div>
+-- <div>left\_tee</div>
+-- <div>ll\_angle</div>
+-- <div>lr\_angle</div>
+-- <div>man</div>
+-- <div>middlebutton</div>
+-- <div>mouse</div>
+-- <div>pencil</div>
+-- <div>pirate</div>
+-- <div>plus</div>
+-- <div>question\_arrow</div>
+-- <div>rightbutton</div>
+-- <div>right\_ptr</div>
+-- <div>right\_side</div>
+-- <div>right\_tee</div>
+-- <div>rtl\_logo</div>
+-- <div>sailboat</div>
+-- <div>sb\_down\_arrow</div>
+-- <div>sb\_h\_double\_arrow</div>
+-- <div>sb\_left\_arrow</div>
+-- <div>sb\_right\_arrow</div>
+-- <div>sb\_up\_arrow</div>
+-- <div>sb\_v\_double\_arrow</div>
+-- <div>shuttle</div>
+-- <div>sizing</div>
+-- <div>spider</div>
+-- <div>spraycan</div>
+-- <div>star</div>
+-- <div>target</div>
+-- <div>tcross</div>
+-- <div>top\_left\_arrow</div>
+-- <div>top\_left\_corner</div>
+-- <div>top\_right\_corner</div>
+-- <div>top\_side</div>
+-- <div>top\_tee</div>
+-- <div>trek</div>
+-- <div>ul\_angle</div>
+-- <div>umbrella</div>
+-- <div>ur\_angle</div>
+-- <div>watch</div>
+-- <div>xterm</div>
+-- </div>
+--
 -- @property handle_cursor
 -- @tparam[opt="fleur"] string|nil handle_cursor
 -- @propbeautiful
@@ -284,7 +367,89 @@ local slider = {mt={}}
 -- @tparam[opt=gears.shape.rectangle] gears.shape shape
 -- @see gears.shape
 
---- The handle grab cursor.
+--- The cursor icon while grabbing the handle.
+-- The available cursor names are:
+--
+-- <div class='flex-list'>
+-- <div>num\_glyphs</div>
+-- <div>arrow</div>
+-- <div>based\_arrow\_down</div>
+-- <div>based\_arrow\_up</div>
+-- <div>boat</div>
+-- <div>bogosity</div>
+-- <div>bottom\_left\_corner</div>
+-- <div>bottom\_right\_corner</div>
+-- <div>bottom\_side</div>
+-- <div>bottom\_tee</div>
+-- <div>box\_spiral</div>
+-- <div>center\_ptr</div>
+-- <div>circle</div>
+-- <div>clock</div>
+-- <div>coffee\_mug</div>
+-- <div>cross</div>
+-- <div>crosshair</div>
+-- <div>cross\_reverse</div>
+-- <div>cursor</div>
+-- <div>diamond\_cross</div>
+-- <div>dotbox</div>
+-- <div>dot</div>
+-- <div>double\_arrow</div>
+-- <div>draft\_large</div>
+-- <div>draft\_small</div>
+-- <div>draped\_box</div>
+-- <div>exchange</div>
+-- <div>fleur</div>
+-- <div>gobbler</div>
+-- <div>gumby</div>
+-- <div>hand</div>
+-- <div>hand</div>
+-- <div>heart</div>
+-- <div>icon</div>
+-- <div>iron\_cross</div>
+-- <div>leftbutton</div>
+-- <div>left\_ptr</div>
+-- <div>left\_side</div>
+-- <div>left\_tee</div>
+-- <div>ll\_angle</div>
+-- <div>lr\_angle</div>
+-- <div>man</div>
+-- <div>middlebutton</div>
+-- <div>mouse</div>
+-- <div>pencil</div>
+-- <div>pirate</div>
+-- <div>plus</div>
+-- <div>question\_arrow</div>
+-- <div>rightbutton</div>
+-- <div>right\_ptr</div>
+-- <div>right\_side</div>
+-- <div>right\_tee</div>
+-- <div>rtl\_logo</div>
+-- <div>sailboat</div>
+-- <div>sb\_down\_arrow</div>
+-- <div>sb\_h\_double\_arrow</div>
+-- <div>sb\_left\_arrow</div>
+-- <div>sb\_right\_arrow</div>
+-- <div>sb\_up\_arrow</div>
+-- <div>sb\_v\_double\_arrow</div>
+-- <div>shuttle</div>
+-- <div>sizing</div>
+-- <div>spider</div>
+-- <div>spraycan</div>
+-- <div>star</div>
+-- <div>target</div>
+-- <div>tcross</div>
+-- <div>top\_left\_arrow</div>
+-- <div>top\_left\_corner</div>
+-- <div>top\_right\_corner</div>
+-- <div>top\_side</div>
+-- <div>top\_tee</div>
+-- <div>trek</div>
+-- <div>ul\_angle</div>
+-- <div>umbrella</div>
+-- <div>ur\_angle</div>
+-- <div>watch</div>
+-- <div>xterm</div>
+-- </div>
 --
 -- @beautiful beautiful.slider_handle_cursor
 -- @tparam[opt="fleur"] string cursor
@@ -621,7 +786,9 @@ end
 -- @tparam[opt] number args.handle_width The slider handle width.
 -- @tparam[opt] color args.handle_border_color The handle border_color.
 -- @tparam[opt] number args.handle_border_width The handle border width.
--- @tparam[opt] string args.handle_cursor The handle grab cursor.
+-- @tparam[opt] string args.handle_cursor
+--   The cursor icon while grabbing the handle.
+--   The available cursor names are listed under handle_cursor, in the "Object properties" section.
 -- @tparam[opt] gears.shape args.bar_shape The bar (background) shape.
 -- @tparam[opt] number args.bar_height The bar (background) height.
 -- @tparam[opt] color args.bar_color The bar (background) color.
