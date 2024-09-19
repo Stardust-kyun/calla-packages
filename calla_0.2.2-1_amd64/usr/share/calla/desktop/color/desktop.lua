@@ -1,8 +1,7 @@
-local config=".config"
-local picom=config.."/picom.conf"
-local xresources=".Xresources"
-local xsettingsd=".xsettingsd"
-local gtk=config.."/gtk-3.0/settings.ini"
+local calla="/usr/share/calla/"
+local picom=calla.."compositor.conf"
+local xresources=calla.."Xresources"
+local xsettingsd=calla.."xsettingsd"
 
 local function compositor(radius, x, y, opacity)
 	local r = assert(io.open(picom, "r"))
@@ -39,22 +38,11 @@ local function terminal(bg, fg, bl, wh, r, g, y, b, m, c)
 	w:write(file)
 	w:close()
 
-	os.execute("xrdb ~/" .. xresources)
+	os.execute("xrdb " .. xresources)
 	require("awful").spawn.easy_async_with_shell(require("gears").filesystem.get_configuration_dir() .. "color/terminal.sh")
 end
 
 local function theme(theme, icon)
-	local r = assert(io.open(gtk, "r"))
-	local file = r:read("*all")
-	r:close()
-
-	file = file:gsub("gtk%-theme%-name=.-\n", "gtk-theme-name="..theme.."\n")
-	file = file:gsub("gtk%-icon%-theme%-name=.-\n", "gtk-icon-theme-name="..icon.."\n")
-
-	local w = assert(io.open(gtk, "w"))
-	w:write(file)
-	w:close()
-
 	local r = assert(io.open(xsettingsd, "r"))
 	local file = r:read("*all")
 	r:close()
@@ -66,7 +54,7 @@ local function theme(theme, icon)
 	w:write(file)
 	w:close()
 
-	os.execute("xsettingsd &")
+	os.execute("xsettingsd --config '/usr/share/calla/xsettingsd' &")
 end
 
 awesome.connect_signal("color::change", function(color)
