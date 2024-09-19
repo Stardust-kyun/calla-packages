@@ -119,9 +119,9 @@ require("color.desktop")
 -- Startup
 
 local autostart = {
-	"picom -b",
+	"picom -b --config '/usr/share/calla/compositor.conf'",
 	--"gebaard -b",
-	"xsettingsd",
+	"xsettingsd --config '/usr/share/calla/xsettingsd'",
 	"nm-applet",
 	"/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
 }
