@@ -25,10 +25,7 @@ local settings = copytable(user)
 local color
 
 local function genColor()
-	local r = assert(io.open(".config/awesome/color/" .. settings.color .. "/" .. settings.color .. ".json", "r"))
-	local t = r:read("*all")
-	r:close()
-	color = require("json"):decode(t)
+	color = readjson(require("gears").filesystem.get_configuration_dir() .. "color/" .. settings.color .. "/" .. settings.color .. ".json")
 end
 
 genColor()
@@ -368,9 +365,7 @@ local function doTheme()
 			path:make_directory()
 			sourcepath:copy(targetpath, Gio.FileCopyFlags.NONE, nil, nil, nil, nil)
 			color.wall = targetpath:get_path():gsub(require("gears").filesystem.get_configuration_dir(), "")
-			local w = assert(io.open(".config/awesome/color/" .. name .. "/" .. name .. ".json", "w"))
-		w:write(require("json"):encode_pretty(color, nil, { pretty = true, indent = "	", align_keys = false, array_newline = true }))
-		w:close()
+			writejson(require("gears").filesystem.get_configuration_dir() .. "color/" .. name .. "/" .. name .. ".json", color)
 		
 			table.insert(items, name)
 			model:append({name})
@@ -494,14 +489,10 @@ function app:on_startup()
 			end
 		end
 
-		local w = assert(io.open(".config/awesome/json/user.json", "w"))
-		w:write(require("json"):encode_pretty(settings, nil, { pretty = true, indent = "	", align_keys = false, array_newline = true }))
-		w:close()
+		writejson(gears.filesystem.get_cache_dir() .. "user.json", settings)
 		user = copytable(settings)
 
-		local w = assert(io.open(".config/awesome/color/" .. settings.color .. "/" .. settings.color .. ".json", "w"))
-		w:write(require("json"):encode_pretty(color, nil, { pretty = true, indent = "	", align_keys = false, array_newline = true }))
-		w:close()
+		writejson(require("gears").filesystem.get_configuration_dir() .. "color/" .. settings.color .. "/" .. settings.color .. ".json", color)
 
 		awesome.emit_signal("color::change", color)
 

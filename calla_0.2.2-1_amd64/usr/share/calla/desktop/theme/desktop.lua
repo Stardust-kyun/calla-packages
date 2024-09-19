@@ -4,6 +4,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local icons = "/usr/share/icons/" .. beautiful.icons .. "/64x64/"
+local desktopjson = gears.filesystem.get_cache_dir() .. "desktop.json"
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 local Gio = lgi.Gio
@@ -188,9 +189,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			}
 		end
 
-		local w = assert(io.open(".config/awesome/json/desktop.json", "w"))
-		w:write(require("json"):encode_pretty(layout, nil, { pretty = true, indent = "	", align_keys = false, array_newline = true}))
-		w:close()
+		writejson(desktopjson, layout)
 	end
 
 	local function gridindexat(y, x) -- gotta fix this to account for spacing
@@ -220,6 +219,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			image = icons .. "mimetypes/" .. icon .. ".svg"
 		elseif exists(icons .. "apps/" .. icon .. ".svg") then
 			image = icons .. "apps/" .. icon .. ".svg"
+		else
+			image = icons .. "mimetypes/application-x-generic.svg"
 		end
 
 		local widget = hovercursor(wibox.widget {
@@ -264,7 +265,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			icon = icon,
 			forced_width = cell,
 			forced_height = cell,
-			margins = dpi(10),
+			top = dpi(10),
+			left = dpi(10),
+			right = dpi(10),
 			widget = wibox.container.margin
 		})
 
@@ -311,7 +314,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
 					},
 					forced_width = cell,
 					forced_height = cell,
-					margins = dpi(10),
+					top = dpi(10),
+					left = dpi(10),
+					right = dpi(10),
 					visible = false,
 					widget = wibox.container.margin
 				}
@@ -368,8 +373,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 	local function load()
 		s.grid:reset()
 
-		local layoutfile = gears.filesystem.get_configuration_dir() .. "json/desktop.json"
-		if not gears.filesystem.file_readable(layoutfile) then
+		if not gears.filesystem.file_readable(desktopjson) then
 			local entries = generate()
 			for _, entry in ipairs(entries) do
 				s.grid:add(createicon(entry.label, entry.exec, entry.icon))
@@ -378,10 +382,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			return
 		end
 
-		local r = assert(io.open(".config/awesome/json/desktop.json", "r"))
-		local table = r:read("*all")
-		r:close()
-		local layout = require("json"):decode(table)
+		local layout = readjson(desktopjson)
 
 		for _, entry in ipairs(layout) do
 			s.grid:add_widget_at(createicon(entry.widget.label, entry.widget.exec, entry.widget.icon), entry.row, entry.col)

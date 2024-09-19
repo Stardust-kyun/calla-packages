@@ -43,7 +43,7 @@ local function createpreview(t, s, geometry)
 				border_width = dpi(2),
 				border_color = beautiful.bgmid,
                 shape = function(cr, width, height)
-							gears.shape.rounded_rect(cr, width, height, dpi(10))
+							gears.shape.rounded_rect(cr, width, height, dpi(5))
 						end,
                 widget = wibox.container.background
             })

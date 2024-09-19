@@ -5,6 +5,7 @@ local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
+local dockjson = gears.filesystem.get_cache_dir() .. "dock.json"
 
 local tasklist
 
@@ -22,16 +23,10 @@ local separator = wibox.widget {
 	widget = live(wibox.widget.separator, { color = "bgalt" })
 }
 
-if not gears.filesystem.file_readable(gears.filesystem.get_configuration_dir() .. "json/dock.json") then
-	local w = assert(io.open(".config/awesome/json/dock.json", "w"))
-	w:write(require("json"):encode_pretty({}, nil, { pretty = true, indent = "	", align_keys = false, array_newline = true }))
-	w:close()
+if not gears.filesystem.file_readable(dockjson) then
+	writejson(dockjson, {})
 end
-
-local r = assert(io.open(".config/awesome/json/dock.json", "r"))
-local t = r:read("*all")
-r:close()
-local pinned = require("json"):decode(t)
+local pinned = readjson(dockjson)
 
 local function pin(class, exec)
 	local theme = Gtk.IconTheme.get_default()
@@ -55,7 +50,7 @@ local function pin(class, exec)
 					bg = beautiful.bg,
 					widget = wibox.container.background
 				},
-				bottom = dpi(2),
+				margins = dpi(2),
 				widget = wibox.container.margin
 			},
 			shape = function(cr, width, height)
@@ -78,7 +73,7 @@ local function pin(class, exec)
 		local focused = false
 		if client.focus and client.focus.class == class then
 			widget:get_children_by_id("background")[1].bg = beautiful.bgalt
-			widget:get_children_by_id("foreground")[1].bg = beautiful.fg
+			widget:get_children_by_id("foreground")[1].bg = beautiful.fg .. "64"
 			widget.buttons = {
 				awful.button({}, 1, function()
 					for _, c in ipairs(client.get()) do
@@ -99,9 +94,7 @@ local function pin(class, exec)
 					end
 					pins:remove(pins:index(widget))
 					tasklist._do_tasklist_update_now()
-					local w = assert(io.open(".config/awesome/json/dock.json", "w"))
-					w:write(require("json"):encode_pretty(pinned, nil, { pretty = true, indent = "	", align_keys = false, array_newline = true }))
-					w:close()
+					writejson(dockjson, pinned)
 				end)
 			}
 			present = true
@@ -110,8 +103,8 @@ local function pin(class, exec)
 		if not focused then
 			for _, c in ipairs(client.get()) do
 				if c.class == class then
-					widget:get_children_by_id("background")[1].bg = beautiful.bgmid
-					widget:get_children_by_id("foreground")[1].bg = beautiful.fg .. "64"
+					widget:get_children_by_id("background")[1].bg = beautiful.bgalt
+					widget:get_children_by_id("foreground")[1].bg = beautiful.bgalt
 					widget.buttons = {
 						awful.button({}, 1, function()
 							c.first_tag:view_only() -- check current tag first?
@@ -134,9 +127,7 @@ local function pin(class, exec)
 							end
 							pins:remove(pins:index(widget))
 							tasklist._do_tasklist_update_now()
-							local w = assert(io.open(".config/awesome/json/dock.json", "w"))
-							w:write(require("json"):encode_pretty(pinned, nil, { pretty = true, indent = "	", align_keys = false, array_newline = true }))
-							w:close()
+							writejson(dockjson, pinned)
 						end)
 					}
 					present = true
@@ -159,9 +150,7 @@ local function pin(class, exec)
 					end
 					pins:remove(pins:index(widget))
 					tasklist._do_tasklist_update_now()
-					local w = assert(io.open(".config/awesome/json/dock.json", "w"))
-					w:write(require("json"):encode_pretty(pinned, nil, { pretty = true, indent = "	", align_keys = false, array_newline = true }))
-					w:close()
+					writejson(dockjson, pinned)
 				end)
 			}
 		end
@@ -241,7 +230,7 @@ tasklist = awful.widget.tasklist {
 				id = "background",
 				widget = wibox.widget.background
 			},
-			bottom = dpi(2),
+			margins = dpi(2),
 			widget = wibox.container.margin
 		},
 		shape = function(cr, width, height)
@@ -275,9 +264,7 @@ tasklist = awful.widget.tasklist {
 						pins:add(pin(c.class, exec))
 						table.insert(pinned, { class = c.class, exec = exec })
 						tasklist._do_tasklist_update_now()
-						local w = assert(io.open(".config/awesome/json/dock.json", "w"))
-						w:write(require("json"):encode_pretty(pinned, nil, { pretty = true, indent = "	", align_keys = false, array_newline = true }))
-						w:close()
+						writejson(dockjson, pinned)
 					end
 				end)
 			}
@@ -285,31 +272,31 @@ tasklist = awful.widget.tasklist {
 
 			if client.focus == c then
 				self:get_children_by_id("background")[1].bg = beautiful.bgalt
-				self:get_children_by_id("foreground")[1].bg = beautiful.fg
-			else
-				self:get_children_by_id("background")[1].bg = beautiful.bgmid
 				self:get_children_by_id("foreground")[1].bg = beautiful.fg .. "64"
+			else
+				self:get_children_by_id("background")[1].bg = beautiful.bgalt
+				self:get_children_by_id("foreground")[1].bg = beautiful.bgalt
 			end
 			client.connect_signal("focus", function()
 				if client.focus == c then
 					self:get_children_by_id("background")[1].bg = beautiful.bgalt
-					self:get_children_by_id("foreground")[1].bg = beautiful.fg
-				else
-					self:get_children_by_id("background")[1].bg = beautiful.bgmid
 					self:get_children_by_id("foreground")[1].bg = beautiful.fg .. "64"
+				else
+					self:get_children_by_id("background")[1].bg = beautiful.bgalt
+					self:get_children_by_id("foreground")[1].bg = beautiful.bgalt
 				end
 			end)
 			client.connect_signal("unfocus", function()
-				self:get_children_by_id("background")[1].bg = beautiful.bgmid
-				self:get_children_by_id("foreground")[1].bg = beautiful.fg .. "64"
+				self:get_children_by_id("background")[1].bg = beautiful.bgalt
+				self:get_children_by_id("foreground")[1].bg = beautiful.bgalt
 			end)
 			awesome.connect_signal("live::reload", function()
 				if client.focus == c then
 					self:get_children_by_id("background")[1].bg = beautiful.bgalt
-					self:get_children_by_id("foreground")[1].bg = beautiful.fg
-				else
-					self:get_children_by_id("background")[1].bg = beautiful.bgmid
 					self:get_children_by_id("foreground")[1].bg = beautiful.fg .. "64"
+				else
+					self:get_children_by_id("background")[1].bg = beautiful.bgalt
+					self:get_children_by_id("foreground")[1].bg = beautiful.bgalt
 				end
 			end)
 		end

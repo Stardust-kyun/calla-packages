@@ -2,10 +2,7 @@ local gears = require("gears")
 local dpi = require("beautiful").xresources.apply_dpi
 local iconpath = require("gears").filesystem.get_configuration_dir() .. "theme/icons/"
 
-local r = assert(io.open(".config/awesome/color/" .. user.color .. "/" .. user.color .. ".json", "r"))
-local table = r:read("*all")
-r:close()
-local color = require("json"):decode(table)
+local color = readjson(gears.filesystem.get_configuration_dir() .. "color/" .. user.color .. "/" .. user.color .. ".json")
 
 local theme = {}
 
