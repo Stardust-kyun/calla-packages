@@ -267,7 +267,7 @@ local function doTheme()
 	local function colorgen()
 		local colors = {}
 
-		for dir in io.popen([[ls -d .config/awesome/color/*/ | cut -f4 -d'/']]):lines() do
+		for dir in io.popen("ls -d " .. require("gears").filesystem.get_configuration_dir() .. "color/*/ | rev | cut -f2 -d'/' | rev"):lines() do
 			table.insert(colors, dir)
 		end
 
@@ -489,7 +489,7 @@ function app:on_startup()
 			end
 		end
 
-		writejson(gears.filesystem.get_cache_dir() .. "user.json", settings)
+		writejson(require("gears").filesystem.get_cache_dir() .. "user.json", settings)
 		user = copytable(settings)
 
 		writejson(require("gears").filesystem.get_configuration_dir() .. "color/" .. settings.color .. "/" .. settings.color .. ".json", color)
